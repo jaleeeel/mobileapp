@@ -1,13 +1,18 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View, } from 'react-native';
 
 const SignupScreen: React.FC = () => {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [submitted, setSubmitted] = useState(false);
 
   const handleSignup = () => {
     if (password !== confirmPassword) {
@@ -15,7 +20,15 @@ const SignupScreen: React.FC = () => {
       return;
     }
     // Add your signup logic here
-    console.log('Signing up with:', email, password);
+    setSubmitted(true);
+  };
+  const handleClear = () => {
+    setName('');
+    setNumber('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setSubmitted(false);
   };
 
   return (
@@ -64,6 +77,18 @@ const SignupScreen: React.FC = () => {
       <Pressable style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
+      <Pressable style={[styles.button]} onPress={handleClear}>
+            <Text style={styles.buttonText}>Clear</Text>
+          </Pressable>
+      {submitted && (
+          <View style={styles.output}>
+            <Text style={styles.outputTitle}>Submitted Information:</Text>
+            <Text>Name: {name}</Text>
+            <Text>Email: {email}</Text>
+            <Text>Phone Number: {number}</Text>
+            <Text>Password: {password}</Text>
+          </View>
+        )}
     </View>
   );
 };
@@ -95,10 +120,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#2e86de',
     paddingVertical: 14,
     borderRadius: 8,
+    marginBottom: 12,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
+  },
+  output: {
+    backgroundColor: '#f1f1f1',
+    padding: 15,
+    borderRadius: 8,
+  },
+  outputTitle: {
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
 });
