@@ -4,10 +4,11 @@ import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState('');
 
   const handleLogin = () => {
     // Add your login logic here
-    console.log('Logging in with:', email, password);
+    setSubmitted(true);
   };
 
   return (
@@ -33,7 +34,15 @@ const LoginScreen: React.FC = () => {
       <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
+      {submitted && (
+                <View style={styles.output}>
+                  <Text style={styles.outputTitle}>Submitted Information:</Text>
+                  <Text>Email: {email}</Text>
+                  <Text>Password: {password}</Text>
+                </View>
+              )}
     </View>
+    
   );
 };
 
@@ -68,6 +77,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     textAlign: 'center',
+    fontSize: 16,
+  },
+   output: {
+    marginTop: 20,
+    padding: 12,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+  },
+  outputTitle: {
+    fontWeight: 'bold',
+    marginBottom: 8,
     fontSize: 16,
   },
 });
